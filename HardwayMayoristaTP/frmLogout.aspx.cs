@@ -7,14 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace HardwayMayoristaTP
 {
-    public partial class Site : System.Web.UI.MasterPage
+    public partial class frmLogout : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Nivel"] == null)
-            {
-                Response.Redirect("frmLogout.aspx");
-            }
+            Session.Clear();
+            Response.Redirect("frmLogin.aspx");
         }
     }
 }

@@ -46,7 +46,8 @@
                             <a href="~/frmPedidos.aspx" class="list-group-item list-group-item-action bg-dark text-white">Pedidos</a>
                             <a href="~/frmClientes.aspx" class="list-group-item list-group-item-action bg-dark text-white">Clientes</a>
                             <a href="~/frmUsuarios.aspx" class="list-group-item list-group-item-action bg-dark text-white">Usuarios</a>
-                            <a href="~/Logout.aspx" class="list-group-item list-group-item-action bg-dark text-white">Cerrar sesión</a>
+                            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="frmLogout.aspx">Cerrar Sesión</asp:HyperLink>
+
                         </div>
                     </div>
                 </nav>

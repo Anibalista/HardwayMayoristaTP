@@ -70,6 +70,7 @@
     <Content Include="frmAltaCliente.aspx" />
     <Content Include="frmConsultaCliente.aspx" />
     <Content Include="frmLogin.aspx" />
+    <Content Include="frmLogout.aspx" />
     <Content Include="frmPrincipal.aspx" />
     <Content Include="Recursos\LogoHardway.png" />
     <Content Include="Web.config" />
@@ -101,6 +102,13 @@
     </Compile>
     <Compile Include="frmLogin.aspx.designer.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogout.aspx.cs">
+      <DependentUpon>frmLogout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmLogout.aspx.designer.cs">
+      <DependentUpon>frmLogout.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmPrincipal.aspx.cs">
       <DependentUpon>frmPrincipal.aspx</DependentUpon>
