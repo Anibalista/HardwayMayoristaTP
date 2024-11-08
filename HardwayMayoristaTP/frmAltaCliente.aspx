@@ -11,31 +11,37 @@
                     
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <asp:RequiredFieldValidator ID="RequiredNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="Debe ingresar un nombre"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="Ingrese un nombre" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionNombre" runat="server" ErrorMessage="El nombre solo puede contener letras" ValidationExpression="^[a-zA-Z\s'-]+$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtNombre"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="apellido">Apellido</label>
+                            <label for="apellido">Apellido<asp:RequiredFieldValidator ID="RequiredApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="RequiredFieldValidator" ForeColor="Red" style="margin-left:50px">Ingrese un apellido</asp:RequiredFieldValidator>
+                            </label>
+                            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionApellido" runat="server" ErrorMessage="El apellido solo puede contener letras" ValidationExpression="^[a-zA-Z\s'-]+$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtApellido"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email<asp:RequiredFieldValidator ID="RequiredEmail" runat="server" ControlToValidate="txtEmail" ErrorMessage="Ingrese un Email" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
+                            </label>
+                            <asp:RegularExpressionValidator ID="RegularExpressionEmail" runat="server" ControlToValidate="txtEmail" ErrorMessage="Ingrese un email válido" ValidationExpression="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$" ForeColor="Red" style="margin-left:10px"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="celular">Celular</label>
+                            <label for="celular">Celular<asp:RequiredFieldValidator ID="RequiredCelular" runat="server" ControlToValidate="txtCelular" ErrorMessage="Ingrese un n° de celular" ForeColor="Red" style="margin-left:40px"></asp:RequiredFieldValidator>
+                            </label>
+                            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionCelular" runat="server" ErrorMessage="Ingrese solo Nros, entre 10 y 13 dígitos" ValidationExpression="^\d{10,13}$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtCelular"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtCelular" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="localidad">Localidad</label>
-                            <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" />
+                            <label for="localidad">Localidad<asp:RequiredFieldValidator ID="RequiredLocalidad" runat="server" ControlToValidate="txtLocalidad" ErrorMessage="Ingrese una localidad" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
+                            </label>
+                            &nbsp;<asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="dropTipoDni">TIPO DE DNI</label>
-                            <asp:DropDownList ID="dropTipoDni" runat="server" DataSourceID="SqlDataSourceTipoDni" DataTextField="Tipo" DataValueField="Id"></asp:DropDownList>
-                        </div>
-                        <div class="form-group">
-                            <label for="txtDNI">DNI</label>
+                            <label for="dni">DNI<asp:RequiredFieldValidator ID="RequiredDNI" runat="server" ControlToValidate="txtDNI" ErrorMessage="Ingrese un DNI" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
+                            </label>
+                            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionDNI" runat="server" ErrorMessage="Ingrese solo números , entre 7 y 8 dígitos" ValidationExpression="^\d{7,8}$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtDNI"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group d-flex justify-content-between" style="margin: 5px 150px;">
