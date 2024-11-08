@@ -5,7 +5,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - HardwayMayoristaTP</title>
+    <title><%: Page.Title %>- HardwayMayoristaTP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
     <style>
         body {
@@ -43,10 +43,10 @@
                                 <div>Administrador</div>
                             </a>
                             <a href="~/Default.aspx" class="list-group-item list-group-item-action bg-dark text-white">Inicio</a>
-                            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/frmAltaCliente.aspx" Text="Alta Cliente" CssClass="list-group-item list-group-item-action bg-dark text-white">HyperLink</asp:HyperLink>
-                            <a href="~/frmClientes.aspx" class="list-group-item list-group-item-action bg-dark text-white">Clientes</a>
-                            <a href="~/frmUsuarios.aspx" class="list-group-item list-group-item-action bg-dark text-white">Usuarios</a>
-                            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="frmLogout.aspx">Cerrar Sesión</asp:HyperLink>
+                            <asp:HyperLink ID="HyperLinkAltaCliente" runat="server" NavigateUrl="~/frmAltaCliente.aspx" Text="Registrar Cliente" CssClass="list-group-item list-group-item-action bg-dark text-white" style="margin-bottom: 0px"></asp:HyperLink>
+                            <asp:HyperLink ID="HyperLinkConsultaCliente" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" Text="ABM Clientes" NavigateUrl="~/frmConsultaCliente.aspx" style="left: 0px; top: 0px"></asp:HyperLink>
+                            
+                            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="frmLogout.aspx" style="left: 0px; top: 0px">Cerrar Sesión</asp:HyperLink>
 
                         </div>
                     </div>

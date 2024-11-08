@@ -69,6 +69,15 @@ namespace HardwayMayoristaTP
         protected global::System.Web.UI.WebControls.TextBox txtLocalidad;
 
         /// <summary>
+        /// Control dropTipoDni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dropTipoDni;
+
+        /// <summary>
         /// Control txtDNI.
         /// </summary>
         /// <remarks>
@@ -94,5 +103,32 @@ namespace HardwayMayoristaTP
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
+
+        /// <summary>
+        /// Control SqlDataSourceClientes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceClientes;
+
+        /// <summary>
+        /// Control SqlDataSourcePersonas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourcePersonas;
+
+        /// <summary>
+        /// Control SqlDataSourceTipoDni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceTipoDni;
     }
 }

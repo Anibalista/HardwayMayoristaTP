@@ -31,7 +31,11 @@
                             <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="dni">DNI</label>
+                            <label for="dropTipoDni">TIPO DE DNI</label>
+                            <asp:DropDownList ID="dropTipoDni" runat="server" DataSourceID="SqlDataSourceTipoDni" DataTextField="Tipo" DataValueField="Id"></asp:DropDownList>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDNI">DNI</label>
                             <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group d-flex justify-content-between" style="margin: 5px 150px;">
@@ -44,5 +48,51 @@
             </div>
         </div>
     </div>
+    <asp:SqlDataSource ID="SqlDataSourceClientes" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Clientes] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Clientes] ([IdPersona], [IdLocalidad]) VALUES (@IdPersona, @IdLocalidad)" SelectCommand="SELECT * FROM [Clientes]" UpdateCommand="UPDATE [Clientes] SET [IdPersona] = @IdPersona, [IdLocalidad] = @IdLocalidad WHERE [Id] = @Id">
+        <DeleteParameters>
+            <asp:Parameter Name="Id" Type="Int32" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="IdPersona" Type="Int32" />
+            <asp:Parameter Name="IdLocalidad" Type="Int32" />
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="IdPersona" Type="Int32" />
+            <asp:Parameter Name="IdLocalidad" Type="Int32" />
+            <asp:Parameter Name="Id" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourcePersonas" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Personas] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Personas] ([Dni], [NombreApellido], [Email], [Telefono], [IdTipoDni]) VALUES (@Dni, @NombreApellido, @Email, @Telefono, @IdTipoDni)" SelectCommand="SELECT * FROM [Personas]" UpdateCommand="UPDATE [Personas] SET [Dni] = @Dni, [NombreApellido] = @NombreApellido, [Email] = @Email, [Telefono] = @Telefono, [IdTipoDni] = @IdTipoDni WHERE [Id] = @Id">
+        <DeleteParameters>
+            <asp:Parameter Name="Id" Type="Int32" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="Dni" Type="String" />
+            <asp:Parameter Name="NombreApellido" Type="String" />
+            <asp:Parameter Name="Email" Type="String" />
+            <asp:Parameter Name="Telefono" Type="String" />
+            <asp:Parameter Name="IdTipoDni" Type="Int32" />
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="Dni" Type="String" />
+            <asp:Parameter Name="NombreApellido" Type="String" />
+            <asp:Parameter Name="Email" Type="String" />
+            <asp:Parameter Name="Telefono" Type="String" />
+            <asp:Parameter Name="IdTipoDni" Type="Int32" />
+            <asp:Parameter Name="Id" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourceTipoDni" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [TipoDni] WHERE [Id] = @Id" InsertCommand="INSERT INTO [TipoDni] ([Tipo]) VALUES (@Tipo)" SelectCommand="SELECT Id, Tipo FROM TipoDni" UpdateCommand="UPDATE [TipoDni] SET [Tipo] = @Tipo WHERE [Id] = @Id">
+        <DeleteParameters>
+            <asp:Parameter Name="Id" Type="Int32" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="Tipo" Type="String" />
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="Tipo" Type="String" />
+            <asp:Parameter Name="Id" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
 </asp:Content>
 
