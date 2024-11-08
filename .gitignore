@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignorar archivos de configuración
+Web.config
+Web.Debug.config
+Web.Release.config
+
+# Ignorar archivos de login
+frmLogin.aspx
+frmLogin.aspx.cs
+frmLogin.aspx.designer.cs
