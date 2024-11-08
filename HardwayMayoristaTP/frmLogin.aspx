@@ -72,14 +72,6 @@
                                 </SelectParameters>
                                 <UpdateParameters>
                                     <asp:ControlParameter ControlID="Usuario" Name="User" PropertyName="Text" Type="String" />
-                                    <asp:Parameter Name="password" Type="String" />
-                                    <asp:Parameter Name="Activo" Type="Boolean" />
-                                    <asp:Parameter DbType="DateTime2" Name="FechaAlta" />
-                                    <asp:Parameter Name="Observaciones" Type="String" />
-                                    <asp:Parameter Name="IdNivel" Type="Int32" />
-                                    <asp:Parameter Name="IdPersona" Type="Int32" />
-                                    <asp:Parameter Name="IntentosFallidos" Type="Int32" />
-                                    <asp:Parameter Name="Id" Type="Int32" />
                                 </UpdateParameters>
                             </asp:SqlDataSource>
                             ¿Olvidó su contraseña? Restaurar contraseña</a>

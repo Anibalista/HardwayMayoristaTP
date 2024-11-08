@@ -43,7 +43,7 @@
                                 <div>Administrador</div>
                             </a>
                             <a href="~/Default.aspx" class="list-group-item list-group-item-action bg-dark text-white">Inicio</a>
-                            <a href="~/frmPedidos.aspx" class="list-group-item list-group-item-action bg-dark text-white">Pedidos</a>
+                            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/frmAltaCliente.aspx" Text="Alta Cliente" CssClass="list-group-item list-group-item-action bg-dark text-white">HyperLink</asp:HyperLink>
                             <a href="~/frmClientes.aspx" class="list-group-item list-group-item-action bg-dark text-white">Clientes</a>
                             <a href="~/frmUsuarios.aspx" class="list-group-item list-group-item-action bg-dark text-white">Usuarios</a>
                             <asp:HyperLink ID="HyperLink1" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="frmLogout.aspx">Cerrar Sesión</asp:HyperLink>
