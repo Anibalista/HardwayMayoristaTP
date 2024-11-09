@@ -8,7 +8,7 @@
                     <h5 class="card-title">Registro de Cliente</h5>
                 </div>
                 <div class="card-body">
-                    
+                    <asp:Label ID="LabelMensaje" runat="server" Visible="False"></asp:Label>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <asp:RequiredFieldValidator ID="RequiredNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="Ingrese un nombre" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
@@ -16,7 +16,8 @@
                             <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="apellido">Apellido<asp:RequiredFieldValidator ID="RequiredApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="RequiredFieldValidator" ForeColor="Red" style="margin-left:50px">Ingrese un apellido</asp:RequiredFieldValidator>
+                            <label for="apellido">
+                            Apellido<asp:RequiredFieldValidator ID="RequiredApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="RequiredFieldValidator" ForeColor="Red" style="margin-left:50px">Ingrese un apellido</asp:RequiredFieldValidator>
                             </label>
                             &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionApellido" runat="server" ErrorMessage="El apellido solo puede contener letras" ValidationExpression="^[a-zA-Z\s'-]+$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtApellido"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" />
@@ -39,28 +40,47 @@
                             &nbsp;<asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="tipoDni">
+                            <br />
+                            Tipo de Documento</label>&nbsp;
+                            <asp:DropDownList ID="DropDownTipoDni" runat="server" DataSourceID="SqlDataSourceTipoDni" DataTextField="Tipo" DataValueField="Id"></asp:DropDownList>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="form-group">
                             <label for="dni">DNI<asp:RequiredFieldValidator ID="RequiredDNI" runat="server" ControlToValidate="txtDNI" ErrorMessage="Ingrese un DNI" ForeColor="Red" style="margin-left:50px"></asp:RequiredFieldValidator>
                             </label>
                             &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionDNI" runat="server" ErrorMessage="Ingrese solo números , entre 7 y 8 dígitos" ValidationExpression="^\d{7,8}$" ForeColor="Red" style="margin-left:10px" ControlToValidate="txtDNI"></asp:RegularExpressionValidator>
                             <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" />
                         </div>
                         <div class="form-group d-flex justify-content-between" style="margin: 5px 150px;">
-                            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" />
-                            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-danger" />
+                            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClientClick="return confirmGuardar();" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
+                            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClientClick="return confirmCancelar();" CssClass="btn btn-danger" OnClick="btnCancelar_Click" />
                         </div>
-
+                    <script type="text/javascript">
+    confirmCancelarcliente() {
+        return confirm("¿Estás seguro de cancelar?");
+    };
+    confirmGuardarcliente() {
+        return confirm("¿Estás seguro de guardar los cambios?");
+    }
+                    </script>
                     
                 </div>
             </div>
         </div>
     </div>
-    <asp:SqlDataSource ID="SqlDataSourceClientes" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Clientes] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Clientes] ([IdPersona], [IdLocalidad]) VALUES (@IdPersona, @IdLocalidad)" SelectCommand="SELECT * FROM [Clientes]" UpdateCommand="UPDATE [Clientes] SET [IdPersona] = @IdPersona, [IdLocalidad] = @IdLocalidad WHERE [Id] = @Id">
+    <asp:SqlDataSource ID="SqlDataSourceClientes" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" 
+    DeleteCommand="DELETE FROM [Clientes] WHERE [Id] = @Id" 
+    InsertCommand="INSERT INTO Clientes(IdPersona, Localidad) VALUES (@IdPersona, @Localidad)" 
+    SelectCommand="SELECT * FROM [Clientes]" 
+    UpdateCommand="UPDATE [Clientes] SET [IdPersona] = @IdPersona, [IdLocalidad] = @IdLocalidad WHERE [Id] = @Id">
         <DeleteParameters>
             <asp:Parameter Name="Id" Type="Int32" />
         </DeleteParameters>
         <InsertParameters>
             <asp:Parameter Name="IdPersona" Type="Int32" />
-            <asp:Parameter Name="IdLocalidad" Type="Int32" />
+            <asp:ControlParameter ControlID="txtLocalidad" Name="Localidad" PropertyName="Text" Type="String" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="IdPersona" Type="Int32" />
@@ -68,17 +88,21 @@
             <asp:Parameter Name="Id" Type="Int32" />
         </UpdateParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="SqlDataSourcePersonas" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Personas] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Personas] ([Dni], [NombreApellido], [Email], [Telefono], [IdTipoDni]) VALUES (@Dni, @NombreApellido, @Email, @Telefono, @IdTipoDni)" SelectCommand="SELECT * FROM [Personas]" UpdateCommand="UPDATE [Personas] SET [Dni] = @Dni, [NombreApellido] = @NombreApellido, [Email] = @Email, [Telefono] = @Telefono, [IdTipoDni] = @IdTipoDni WHERE [Id] = @Id">
+
+    <asp:SqlDataSource ID="SqlDataSourcePersonas" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Personas] WHERE [Id] = @Id" InsertCommand="INSERT INTO Personas(Dni, NombreApellido, Email, Telefono, IdTipoDni) VALUES (@Dni, @NombreApellido, @Email, @Telefono, @IdTipoDni)" SelectCommand="SELECT Id, Dni, NombreApellido, Email, Telefono, IdTipoDni FROM Personas WHERE (Dni = @Dni)" UpdateCommand="UPDATE [Personas] SET [Dni] = @Dni, [NombreApellido] = @NombreApellido, [Email] = @Email, [Telefono] = @Telefono, [IdTipoDni] = @IdTipoDni WHERE [Id] = @Id">
         <DeleteParameters>
             <asp:Parameter Name="Id" Type="Int32" />
         </DeleteParameters>
         <InsertParameters>
-            <asp:Parameter Name="Dni" Type="String" />
-            <asp:Parameter Name="NombreApellido" Type="String" />
-            <asp:Parameter Name="Email" Type="String" />
-            <asp:Parameter Name="Telefono" Type="String" />
-            <asp:Parameter Name="IdTipoDni" Type="Int32" />
+            <asp:ControlParameter ControlID="txtDNI" ConvertEmptyStringToNull="False" Name="Dni" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="txtApellido" ConvertEmptyStringToNull="False" Name="NombreApellido" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="txtEmail" ConvertEmptyStringToNull="False" Name="Email" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="txtCelular" ConvertEmptyStringToNull="False" DefaultValue="" Name="Telefono" PropertyName="Text" Type="String" />
+            <asp:ControlParameter ControlID="DropDownTipoDni" ConvertEmptyStringToNull="False" DefaultValue="1" Name="IdTipoDni" PropertyName="SelectedValue" Type="Int32" />
         </InsertParameters>
+        <SelectParameters>
+            <asp:ControlParameter ControlID="txtDNI" ConvertEmptyStringToNull="False" Name="Dni" PropertyName="Text" />
+        </SelectParameters>
         <UpdateParameters>
             <asp:Parameter Name="Dni" Type="String" />
             <asp:Parameter Name="NombreApellido" Type="String" />
@@ -88,7 +112,7 @@
             <asp:Parameter Name="Id" Type="Int32" />
         </UpdateParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="SqlDataSourceTipoDni" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [TipoDni] WHERE [Id] = @Id" InsertCommand="INSERT INTO [TipoDni] ([Tipo]) VALUES (@Tipo)" SelectCommand="SELECT Id, Tipo FROM TipoDni" UpdateCommand="UPDATE [TipoDni] SET [Tipo] = @Tipo WHERE [Id] = @Id">
+    <asp:SqlDataSource ID="SqlDataSourceTipoDni" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [TipoDni] WHERE [Id] = @Id" InsertCommand="INSERT INTO [TipoDni] ([Tipo]) VALUES (@Tipo)" SelectCommand="SELECT [Id], [Tipo] FROM [TipoDni]" UpdateCommand="UPDATE [TipoDni] SET [Tipo] = @Tipo WHERE [Id] = @Id">
         <DeleteParameters>
             <asp:Parameter Name="Id" Type="Int32" />
         </DeleteParameters>

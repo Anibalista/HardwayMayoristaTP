@@ -80,6 +80,7 @@
   <ItemGroup>
     <Content Include="frmAltaCliente.aspx" />
     <Content Include="frmConsultaCliente.aspx" />
+    <Content Include="frmEditClientes.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="frmLogout.aspx" />
     <Content Include="frmPrincipal.aspx" />
@@ -106,6 +107,13 @@
     </Compile>
     <Compile Include="frmConsultaCliente.aspx.designer.cs">
       <DependentUpon>frmConsultaCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditClientes.aspx.cs">
+      <DependentUpon>frmEditClientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmEditClientes.aspx.designer.cs">
+      <DependentUpon>frmEditClientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.aspx.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>

@@ -33,6 +33,15 @@ namespace HardwayMayoristaTP
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Control HyperLinkInicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkInicio;
+
+        /// <summary>
         /// Control HyperLinkAltaCliente.
         /// </summary>
         /// <remarks>
@@ -51,13 +60,22 @@ namespace HardwayMayoristaTP
         protected global::System.Web.UI.WebControls.HyperLink HyperLinkConsultaCliente;
 
         /// <summary>
-        /// Control HyperLink1.
+        /// Control HyperLinkAdminClientes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkAdminClientes;
+
+        /// <summary>
+        /// Control HyperLinkLogout.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkLogout;
 
         /// <summary>
         /// Control ContentPlaceHolder1.

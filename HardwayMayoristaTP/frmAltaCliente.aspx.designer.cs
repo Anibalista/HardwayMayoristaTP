@@ -15,6 +15,15 @@ namespace HardwayMayoristaTP
     {
 
         /// <summary>
+        /// Control LabelMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelMensaje;
+
+        /// <summary>
         /// Control RequiredNombre.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace HardwayMayoristaTP
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtLocalidad;
+
+        /// <summary>
+        /// Control DropDownTipoDni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownTipoDni;
 
         /// <summary>
         /// Control RequiredDNI.
