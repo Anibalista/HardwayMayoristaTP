@@ -72,7 +72,7 @@
     </div>
     <asp:SqlDataSource ID="SqlDataSourceClientes" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" 
     DeleteCommand="DELETE FROM [Clientes] WHERE [Id] = @Id" 
-    InsertCommand="INSERT INTO Clientes(IdPersona, Localidad) VALUES (@IdPersona, @Localidad)" 
+    InsertCommand="INSERT INTO Clientes(IdPersona, Localidad, Activo) VALUES (@IdPersona, @Localidad, 1)" 
     SelectCommand="SELECT * FROM [Clientes]" 
     UpdateCommand="UPDATE [Clientes] SET [IdPersona] = @IdPersona, [IdLocalidad] = @IdLocalidad WHERE [Id] = @Id">
         <DeleteParameters>
@@ -89,16 +89,17 @@
         </UpdateParameters>
     </asp:SqlDataSource>
 
-    <asp:SqlDataSource ID="SqlDataSourcePersonas" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Personas] WHERE [Id] = @Id" InsertCommand="INSERT INTO Personas(Dni, NombreApellido, Email, Telefono, IdTipoDni) VALUES (@Dni, @NombreApellido, @Email, @Telefono, @IdTipoDni)" SelectCommand="SELECT Id, Dni, NombreApellido, Email, Telefono, IdTipoDni FROM Personas WHERE (Dni = @Dni)" UpdateCommand="UPDATE [Personas] SET [Dni] = @Dni, [NombreApellido] = @NombreApellido, [Email] = @Email, [Telefono] = @Telefono, [IdTipoDni] = @IdTipoDni WHERE [Id] = @Id">
+    <asp:SqlDataSource ID="SqlDataSourcePersonas" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" DeleteCommand="DELETE FROM [Personas] WHERE [Id] = @Id" InsertCommand="INSERT INTO Personas(Dni, Email, Telefono, IdTipoDni, Nombre, Apellido) VALUES (@Dni, @Email, @Telefono, @IdTipoDni, @Nombre, @Apellido)" SelectCommand="SELECT Id, Dni, Email, Telefono, IdTipoDni, Nombre, Apellido FROM Personas WHERE (Dni = @Dni)" UpdateCommand="UPDATE [Personas] SET [Dni] = @Dni, [NombreApellido] = @NombreApellido, [Email] = @Email, [Telefono] = @Telefono, [IdTipoDni] = @IdTipoDni WHERE [Id] = @Id">
         <DeleteParameters>
             <asp:Parameter Name="Id" Type="Int32" />
         </DeleteParameters>
         <InsertParameters>
             <asp:ControlParameter ControlID="txtDNI" ConvertEmptyStringToNull="False" Name="Dni" PropertyName="Text" Type="String" />
-            <asp:ControlParameter ControlID="txtApellido" ConvertEmptyStringToNull="False" Name="NombreApellido" PropertyName="Text" Type="String" />
             <asp:ControlParameter ControlID="txtEmail" ConvertEmptyStringToNull="False" Name="Email" PropertyName="Text" Type="String" />
             <asp:ControlParameter ControlID="txtCelular" ConvertEmptyStringToNull="False" DefaultValue="" Name="Telefono" PropertyName="Text" Type="String" />
             <asp:ControlParameter ControlID="DropDownTipoDni" ConvertEmptyStringToNull="False" DefaultValue="1" Name="IdTipoDni" PropertyName="SelectedValue" Type="Int32" />
+            <asp:ControlParameter ControlID="txtNombre" ConvertEmptyStringToNull="False" Name="Nombre" PropertyName="Text" />
+            <asp:ControlParameter ControlID="txtApellido" ConvertEmptyStringToNull="False" Name="Apellido" PropertyName="Text" />
         </InsertParameters>
         <SelectParameters>
             <asp:ControlParameter ControlID="txtDNI" ConvertEmptyStringToNull="False" Name="Dni" PropertyName="Text" />

@@ -46,7 +46,6 @@
                             <asp:HyperLink ID="HyperLinkInicio" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="~/frmPrincipal.aspx" Text="Inicio"></asp:HyperLink>
                             <asp:HyperLink ID="HyperLinkAltaCliente" runat="server" NavigateUrl="~/frmAltaCliente.aspx" Text="Registrar Cliente" CssClass="list-group-item list-group-item-action bg-dark text-white" style="margin-bottom: 0px; left: 0px; top: 0px;"></asp:HyperLink>
                             <asp:HyperLink ID="HyperLinkConsultaCliente" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" Text="Consultar Clientes" NavigateUrl="~/frmConsultaCliente.aspx" style="left: 0px; top: 0px"></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLinkAdminClientes" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="~/frmGestionClientes.aspx" style="left: 0px; top: 0px">Gestión de Clientes</asp:HyperLink>
                             
                             <asp:HyperLink ID="HyperLinkLogout" runat="server" CssClass="list-group-item list-group-item-action bg-dark text-white" NavigateUrl="frmLogout.aspx" onClick="return confirmLogout();" style="left: 0px; top: 0px">Cerrar Sesión</asp:HyperLink>
 

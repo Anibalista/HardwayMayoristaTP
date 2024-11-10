@@ -18,20 +18,67 @@ namespace HardwayMayoristaTP
         {
             if (!IsPostBack)
             {
-                
+                if (!autorizar())
+                {
+                    Response.Redirect("frmPrincipal.aspx");
+                }
             }
         }
 
 
+        protected bool autorizar()
+        {
+            if (Session["Nivel"] == null)
+            {
+                return false;
+            }
+            if (Session["Nivel"].ToString() == "admin")
+            {
+                return true;
+            }
+            if (Session["Nivel"].ToString() == "vendedor")
+            {
+                return true;
+            }
+            if (Session["Nivel"].ToString() == "gerente")
+            {
+                return true;
+            }
+            if (Session["Nivel"].ToString() == "logistica")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected bool autorizarEliminar()
+        {
+            if (Session["Nivel"] == null)
+            {
+                return false;
+            }
+            if (Session["Nivel"].ToString() == "admin")
+            {
+                return true;
+            }
+            if (Session["Nivel"].ToString() == "vendedor")
+            {
+                return true;
+            }
+            return false;
+        }
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             string searchValue = txtBuscar.Text.Trim();
-            string query = "SELECT Personas.Dni, Personas.NombreApellido, Personas.Email, Personas.Telefono, Clientes.Localidad " +
-                           "FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id " +
-                           "INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id " +
-                           "WHERE (Personas.Dni LIKE '%' + @Consulta + '%' OR Personas.NombreApellido LIKE '%' + @Consulta + '%' " +
-                           "OR Personas.Email LIKE '%' + @Consulta + '%' OR Personas.Telefono LIKE '%' + @Consulta + '%' " +
-                           "OR Clientes.Localidad LIKE '%' + @Consulta + '%') AND Clientes.Activo = 1";
+            string query = "SELECT Personas.Dni, Personas.Nombre, Personas.Apellido, Personas.Email, Personas.Telefono, Clientes.Localidad " +
+               "FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id " +
+               "INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id " +
+               "WHERE (Personas.Dni LIKE '%' + @Consulta + '%' OR Personas.Nombre LIKE '%' + @Consulta + '%' " +
+               "OR Personas.Apellido LIKE '%' + @Consulta + '%' OR Personas.Email LIKE '%' + @Consulta + '%' " +
+               "OR Personas.Telefono LIKE '%' + @Consulta + '%' OR Clientes.Localidad LIKE '%' + @Consulta + '%') " +
+               "AND Clientes.Activo = 1";
+
             string connectionString = ConfigurationManager.ConnectionStrings["HardwayMayoristaConnectionString"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -47,13 +94,17 @@ namespace HardwayMayoristaTP
 
         protected void GridViewClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (!autorizarEliminar())
+            {
+                return;
+            }
             if (e.CommandName == "Edit")
             {
                 // Obtener el DNI desde el CommandArgument
                 string dni = e.CommandArgument.ToString();
 
                 // Guardar el DNI en la sesión
-                Session["DniCliente"] = dni;
+                Session["Dni"] = dni;
 
                 // Redirigir a la página de edición
                 Response.Redirect("frmEditClientes.aspx");
@@ -78,7 +129,7 @@ namespace HardwayMayoristaTP
                 var worksheet = excel.Workbook.Worksheets.Add("Clientes");
 
                 // Añadir encabezados
-                string[] headers = { "Documento", "Apellido y Nombre", "Email", "Celular", "Localidad" };
+                string[] headers = { "Documento"," Nombre", "Apellido", "Email", "Celular", "Localidad" };
                 for (int i = 0; i < headers.Length; i++)
                 {
                     worksheet.Cells[1, i + 1].Value = headers[i];
@@ -132,15 +183,15 @@ namespace HardwayMayoristaTP
                 doc.Open();
 
                 // Definir la tabla con el número correcto de columnas
-                PdfPTable table = new PdfPTable(5); // Número correcto de columnas
+                PdfPTable table = new PdfPTable(6); // Número correcto de columnas
                 table.WidthPercentage = 100; // Ajustar tabla al 100% del área de impresión
 
                 // Anchos relativos de las columnas
-                float[] widths = new float[] { 20f, 30f, 30f, 20f, 20f };
+                float[] widths = new float[] { 15f, 20f, 20f, 30f, 15f, 20f };
                 table.SetWidths(widths);
 
                 // Añadir encabezados
-                string[] headers = { "Documento", "Apellido y Nombre", "Email", "Celular", "Localidad" };
+                string[] headers = { "Documento", " Nombre", "Apellido", "Email", "Celular", "Localidad" };
                 foreach (string header in headers)
                 {
                     PdfPCell pdfCell = new PdfPCell(new Phrase(header));
@@ -151,18 +202,19 @@ namespace HardwayMayoristaTP
                 foreach (GridViewRow gridViewRow in GridViewClientes.Rows)
                 {
                     // Decodificar caracteres HTML
-                    string[] cellTexts = new string[5];
-                    for (int i = 0; i < 5; i++)
+                    string[] cellTexts = new string[6];
+                    for (int i = 0; i < 6; i++)
                     {
                         cellTexts[i] = HttpUtility.HtmlDecode(gridViewRow.Cells[i].Text);
                     }
 
                     // Agregar celdas individuales basadas en las columnas específicas
                     table.AddCell(new PdfPCell(new Phrase(cellTexts[0]))); // Documento
-                    table.AddCell(new PdfPCell(new Phrase(cellTexts[1]))); // Apellido y Nombre
-                    table.AddCell(new PdfPCell(new Phrase(cellTexts[2]))); // Email
-                    table.AddCell(new PdfPCell(new Phrase(cellTexts[3]))); // Celular
-                    table.AddCell(new PdfPCell(new Phrase(cellTexts[4]))); // Localidad
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[1]))); // Nombre
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[2]))); // Nombre
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[3]))); // Email
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[4]))); // Celular
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[5]))); // Localidad
                 }
 
                 doc.Add(table);

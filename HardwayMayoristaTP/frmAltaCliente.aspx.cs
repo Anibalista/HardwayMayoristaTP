@@ -45,7 +45,8 @@ namespace HardwayMayoristaTP
                     var persona = new Personas
                     {
                         Dni = txtDNI.Text,
-                        NombreApellido = txtNombre.Text + " " + txtApellido.Text,
+                        Nombre = txtNombre.Text,
+                        Apellido = txtApellido.Text,
                         Email = txtEmail.Text,
                         Telefono = txtCelular.Text,
                         IdTipoDni = int.Parse(DropDownTipoDni.SelectedValue)
@@ -73,7 +74,8 @@ namespace HardwayMayoristaTP
                     var cliente = new Clientes
                     {
                         IdPersona = personaId,
-                        Localidad = txtLocalidad.Text
+                        Localidad = txtLocalidad.Text,
+                        Activo = true
                     };
 
                     if (InsertarCliente(cliente) > 0)
@@ -121,7 +123,8 @@ namespace HardwayMayoristaTP
         private int InsertarPersona(Personas persona)
         {
             SqlDataSourcePersonas.InsertParameters["Dni"].DefaultValue = persona.Dni;
-            SqlDataSourcePersonas.InsertParameters["NombreApellido"].DefaultValue = persona.NombreApellido;
+            SqlDataSourcePersonas.InsertParameters["Nombre"].DefaultValue = persona.Nombre;
+            SqlDataSourcePersonas.InsertParameters["Apellido"].DefaultValue = persona.Apellido;
             SqlDataSourcePersonas.InsertParameters["Email"].DefaultValue = persona.Email;
             SqlDataSourcePersonas.InsertParameters["Telefono"].DefaultValue = persona.Telefono;
             SqlDataSourcePersonas.InsertParameters["IdTipoDni"].DefaultValue = persona.IdTipoDni.ToString();

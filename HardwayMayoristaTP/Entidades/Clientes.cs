@@ -8,7 +8,7 @@ namespace HardwaySI4_PP1.Models
         public int? Id { get; set; }
         public int IdPersona { get; set; }
         public string Localidad { get; set; }
-
+        public bool Activo { get; set; }
     }
 
 }

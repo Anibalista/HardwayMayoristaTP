@@ -29,8 +29,9 @@
             <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
-                    <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" />
-                    <asp:BoundField DataField="NombreApellido" HeaderText="NombreApellido" SortExpression="NombreApellido" />
+                    <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" /> 
+                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
+                    <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
                     <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" />
                     <asp:BoundField DataField="Telefono" HeaderText="Telefono" SortExpression="Telefono" />
                     <asp:BoundField DataField="Localidad" HeaderText="Localidad" SortExpression="Localidad" />
@@ -53,7 +54,7 @@
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
         </div>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" SelectCommand="SELECT Personas.Dni, Personas.NombreApellido, Personas.Email, Personas.Telefono, Clientes.Localidad, Clientes.IdPersona FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id WHERE (Personas.Dni LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1) OR (Personas.NombreApellido LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1) OR (Personas.Email LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1) OR (Personas.Telefono LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1) OR (Clientes.Localidad LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1)" UpdateCommand="UPDATE Clientes SET Activo = 0 FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id WHERE (Personas.Dni = @Dni)">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HardwayMayoristaConnectionString %>" SelectCommand="SELECT Personas.Dni, Personas.Nombre, Personas.Apellido, Personas.Email, Personas.Telefono, Clientes.Localidad, Clientes.IdPersona FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id WHERE (Personas.Dni LIKE N'%' + @Consulta + N'%') AND (Clientes.Activo = 1) OR (Clientes.Activo = 1) AND (Personas.Nombre LIKE N'%' + @Consulta + N'%') OR (Clientes.Activo = 1) AND (Personas.Apellido LIKE N'%' + @Consulta + N'%') OR (Clientes.Activo = 1) AND (Personas.Email LIKE N'%' + @Consulta + N'%') OR (Clientes.Activo = 1) AND (Personas.Telefono LIKE N'%' + @Consulta + N'%') OR (Clientes.Activo = 1) AND (Clientes.Localidad LIKE N'%' + @Consulta + N'%')" UpdateCommand="UPDATE Clientes SET Activo = 0 FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id WHERE (Personas.Dni = @Dni)">
             <SelectParameters>
                 <asp:ControlParameter ControlID="txtBuscar" ConvertEmptyStringToNull="False" Name="Consulta" PropertyName="Text" />
             </SelectParameters>
