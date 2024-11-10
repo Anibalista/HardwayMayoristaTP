@@ -4,6 +4,11 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using OfficeOpenXml;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Web;
 
 namespace HardwayMayoristaTP
 {
@@ -64,6 +69,124 @@ namespace HardwayMayoristaTP
             }
         }
 
+        protected void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Configurar el contexto de la licencia
+
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                var worksheet = excel.Workbook.Worksheets.Add("Clientes");
+
+                // Añadir encabezados
+                string[] headers = { "Documento", "Apellido y Nombre", "Email", "Celular", "Localidad" };
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = headers[i];
+                }
+
+                // Añadir datos
+                int totalCols = headers.Length;
+                for (int i = 0; i < GridViewClientes.Rows.Count; i++)
+                {
+                    for (int j = 0; j < totalCols; j++)
+                    {
+                        // Decodificar caracteres HTML antes de agregarlos
+                        string cellText = HttpUtility.HtmlDecode(GridViewClientes.Rows[i].Cells[j].Text);
+                        worksheet.Cells[i + 2, j + 1].Value = cellText;
+                    }
+                }
+
+                // Ajustar ancho de las celdas
+                for (int i = 1; i <= totalCols; i++)
+                {
+                    worksheet.Column(i).AutoFit();
+                }
+
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string folderPath = Server.MapPath("~/Temp");
+
+                // Crear el directorio si no existe
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string excelFileName = $"ClientesMayoristas_{timestamp}.xlsx";
+                string excelPath = Path.Combine(folderPath, excelFileName);
+                FileInfo excelFile = new FileInfo(excelPath);
+                excel.SaveAs(excelFile);
+
+                // Proporcionar un enlace de descarga
+                lblMensaje.Text = $"<a href='/Temp/{excelFileName}' download='{excelFileName}'>Haga clic aquí para descargar el archivo Excel</a>";
+                lblMensaje.Visible = true;
+            }
+        }
+
+
+        protected void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Document doc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+                doc.Open();
+
+                // Definir la tabla con el número correcto de columnas
+                PdfPTable table = new PdfPTable(5); // Número correcto de columnas
+                table.WidthPercentage = 100; // Ajustar tabla al 100% del área de impresión
+
+                // Anchos relativos de las columnas
+                float[] widths = new float[] { 20f, 30f, 30f, 20f, 20f };
+                table.SetWidths(widths);
+
+                // Añadir encabezados
+                string[] headers = { "Documento", "Apellido y Nombre", "Email", "Celular", "Localidad" };
+                foreach (string header in headers)
+                {
+                    PdfPCell pdfCell = new PdfPCell(new Phrase(header));
+                    table.AddCell(pdfCell);
+                }
+
+                // Añadir datos
+                foreach (GridViewRow gridViewRow in GridViewClientes.Rows)
+                {
+                    // Decodificar caracteres HTML
+                    string[] cellTexts = new string[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cellTexts[i] = HttpUtility.HtmlDecode(gridViewRow.Cells[i].Text);
+                    }
+
+                    // Agregar celdas individuales basadas en las columnas específicas
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[0]))); // Documento
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[1]))); // Apellido y Nombre
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[2]))); // Email
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[3]))); // Celular
+                    table.AddCell(new PdfPCell(new Phrase(cellTexts[4]))); // Localidad
+                }
+
+                doc.Add(table);
+                doc.Close();
+
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string folderPath = Server.MapPath("~/Temp");
+
+                // Crear el directorio si no existe
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string pdfFileName = $"ClientesMayoristas_{timestamp}.pdf";
+                string pdfPath = Path.Combine(folderPath, pdfFileName);
+                File.WriteAllBytes(pdfPath, ms.ToArray());
+
+                // Proporcionar un enlace de descarga
+                lblMensaje.Text = $"<a href='/Temp/{pdfFileName}' download='{pdfFileName}'>Haga clic aquí para descargar el archivo PDF</a>";
+                lblMensaje.Visible = true;
+            }
+        }
+        
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             Response.Redirect("frmAltaCliente.aspx");

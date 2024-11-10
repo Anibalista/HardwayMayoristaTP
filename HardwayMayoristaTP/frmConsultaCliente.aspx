@@ -14,8 +14,19 @@
                 <asp:Button ID="btnAgregarCliente" runat="server" Text="Agregar Cliente" CssClass="btn btn-warning" OnClick="btnAgregarCliente_Click" />
             </div>
         </div>
+        <div class="row mb-3 align-items-end">
+            <div class="col-md-4">
+                <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-success" OnClick="btnExportarExcel_Click" />
+
+            </div> 
+            <div class="col-md-4">
+                <asp:Button ID="btnExportarPDF" runat="server" Text="Exportar a PDF" CssClass="btn btn-danger" OnClick="btnExportarPDF_Click" />
+
+            </div>
+
+        </div>
         <div class="table-responsive">
-            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-11" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand">
+            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" />
@@ -50,5 +61,8 @@
                 <asp:Parameter Name="Dni" />
             </UpdateParameters>
         </asp:SqlDataSource>
+        <br />
+        <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-info" Visible="false"></asp:Label>
+
     </div>
 </asp:Content>
