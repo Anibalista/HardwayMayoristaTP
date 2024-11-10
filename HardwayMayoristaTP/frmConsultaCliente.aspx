@@ -8,7 +8,8 @@
                 <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar cliente..." />
             </div>
             <div class="col-md-2">
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" />
+                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" Width="62px" OnClick="btnBuscar_Click" />
+                
             </div>
             <div class="col-md-4 text-end">
                 <asp:Button ID="btnAgregarCliente" runat="server" Text="Agregar Cliente" CssClass="btn btn-warning" OnClick="btnAgregarCliente_Click" />
@@ -64,6 +65,6 @@
         </asp:SqlDataSource>
         <br />
         <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-info" Visible="false"></asp:Label>
-
+        <asp:Label ID="lblError" runat="server" Text="*" Visible="False"></asp:Label>
     </div>
 </asp:Content>

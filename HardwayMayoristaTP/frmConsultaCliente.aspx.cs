@@ -18,6 +18,7 @@ namespace HardwayMayoristaTP
         {
             if (!IsPostBack)
             {
+                cargarGrilla();
                 if (!autorizar())
                 {
                     Response.Redirect("frmPrincipal.aspx");
@@ -68,8 +69,45 @@ namespace HardwayMayoristaTP
             return false;
         }
 
+        protected void cargarGrilla()
+        {
+            lblMensaje.Visible = false;
+            string searchValue = "";
+            string query = "SELECT Personas.Dni, Personas.Nombre, Personas.Apellido, Personas.Email, Personas.Telefono, Clientes.Localidad " +
+               "FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id " +
+               "INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id " +
+               "WHERE (Personas.Dni LIKE '%' + @Consulta + '%' OR Personas.Nombre LIKE '%' + @Consulta + '%' " +
+               "OR Personas.Apellido LIKE '%' + @Consulta + '%' OR Personas.Email LIKE '%' + @Consulta + '%' " +
+               "OR Personas.Telefono LIKE '%' + @Consulta + '%' OR Clientes.Localidad LIKE '%' + @Consulta + '%') " +
+               "AND Clientes.Activo = 1";
+
+            string connectionString = ConfigurationManager.ConnectionStrings["HardwayMayoristaConnectionString"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Consulta", searchValue);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count < 1)
+                {
+                    mensajeError("danger", "No existe cliente con el dato ingresado", true);
+                }
+                else
+                {
+                    lblError.Visible = false;
+                    lblMensaje.Visible = false;
+                }
+
+                GridViewClientes.DataSource = dt;
+                GridViewClientes.DataSourceID = null;
+                GridViewClientes.DataBind();
+            }
+        }
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            lblMensaje.Visible = false;
             string searchValue = txtBuscar.Text.Trim();
             string query = "SELECT Personas.Dni, Personas.Nombre, Personas.Apellido, Personas.Email, Personas.Telefono, Clientes.Localidad " +
                "FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id " +
@@ -87,7 +125,17 @@ namespace HardwayMayoristaTP
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+                if (dt.Rows.Count < 1)
+                {
+                    mensajeError("danger", "No existe cliente con el dato ingresado", true);
+                } else
+                {
+                    lblError.Visible = false;
+                    lblMensaje.Visible = false;
+                }
+                
                 GridViewClientes.DataSource = dt;
+                GridViewClientes.DataSourceID = null;
                 GridViewClientes.DataBind();
             }
         }
@@ -96,8 +144,10 @@ namespace HardwayMayoristaTP
         {
             if (!autorizarEliminar())
             {
+                mensajeError("danger", "No tiene las credenciales válidas para realizar esa acción", true);
                 return;
             }
+            Session["error"] = false;
             if (e.CommandName == "Edit")
             {
                 // Obtener el DNI desde el CommandArgument
@@ -118,10 +168,26 @@ namespace HardwayMayoristaTP
                 SqlDataSource1.UpdateParameters["Dni"].DefaultValue = dni;
                 SqlDataSource1.Update();
             }
+            cargarGrilla();
+        }
+        protected void mensajeError(string color, string msg, bool mostrar)
+        {
+            string div = $"<div class='alert alert-{color} alert-dismissible fade show' role='alert'>"
+                        + $"{msg}"
+                        + "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+            lblError.Text = div;
+            lblError.Visible = mostrar;
+            Session["error"] = mostrar;
         }
 
         protected void btnExportarExcel_Click(object sender, EventArgs e)
         {
+            if (GridViewClientes.Rows.Count < 1)
+            {
+                mensajeError("danger", "No existen clientes en la consulta, listado cancelado", true);
+                return;
+            }
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Configurar el contexto de la licencia
 
             using (ExcelPackage excel = new ExcelPackage())
@@ -176,6 +242,11 @@ namespace HardwayMayoristaTP
 
         protected void btnExportarPDF_Click(object sender, EventArgs e)
         {
+            if (GridViewClientes.Rows.Count < 1)
+            {
+                mensajeError("danger", "No existen clientes en la consulta, listado cancelado", true);
+                return;
+            }
             using (MemoryStream ms = new MemoryStream())
             {
                 Document doc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);

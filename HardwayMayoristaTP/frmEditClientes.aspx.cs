@@ -27,6 +27,16 @@ namespace HardwayMayoristaTP
                 }
             }
         }
+        protected void limpiarCampos()
+        {
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtCelular.Text = string.Empty;
+            txtLocalidad.Text = string.Empty;
+            txtDNI.Text = string.Empty;
+            DropDownTipoDni.SelectedIndex = 0;
+        }
 
         protected bool autorizar()
         {
@@ -86,7 +96,31 @@ namespace HardwayMayoristaTP
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid)
+            /*
+            SqlDataSourcePersonas.UpdateParameters["Nombre"].DefaultValue = txtNombre.Text;
+            SqlDataSourcePersonas.UpdateParameters["Dni"].DefaultValue = txtDNI.Text;
+            SqlDataSourcePersonas.UpdateParameters["Apellido"].DefaultValue = txtApellido.Text;
+            SqlDataSourcePersonas.UpdateParameters["Email"].DefaultValue = txtEmail.Text;
+            SqlDataSourcePersonas.UpdateParameters["Telefono"].DefaultValue = txtCelular.Text;
+            SqlDataSourcePersonas.UpdateParameters["IdTipoDni"].DefaultValue = DropDownTipoDni.SelectedValue;
+            */
+            int exito = SqlDataSourcePersonas.Update();
+
+            if (exito < 1)
+            {
+                mensajeError("danger", "Error al registrar los datos del cliente", true);
+                return;
+            }
+            exito = 0;
+            exito = SqlDataSourceClientes.Update();
+
+            if (exito < 1)
+            {
+                mensajeError("danger", "Error al registrar los datos del cliente", true);
+                return;
+            }
+            mensajeError("success", "<strong>¡Éxito!</strong> Los datos del cliente se han actualizado exitosamente", true);
+            /*if (Page.IsValid)
             {
                 try
                 {
@@ -130,12 +164,22 @@ namespace HardwayMayoristaTP
                                       "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
                     lblMensaje.Visible = true;
                 }
-            }
+            }*/
+            limpiarCampos();
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("frmConsultaCliente.aspx");
+        }
+
+        protected void mensajeError(string color, string msg, bool mostrar)
+        {
+            string div = $"<div class='alert alert-{color} alert-dismissible fade show' role='alert'>"
+                        + $"{msg}"
+                        + "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+            lblMensaje.Text = div;
+            lblMensaje.Visible = mostrar;
         }
     }
 }
