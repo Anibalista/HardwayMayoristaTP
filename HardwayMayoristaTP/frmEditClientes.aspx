@@ -58,10 +58,10 @@
                          <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClientClick="return confirmCancelar();" CssClass="btn btn-danger" OnClick="btnCancelar_Click" />
                      </div>
                  <script type="text/javascript">
- confirmCancelarcliente() {
+ confirmCancelar() {
      return confirm("¿Estás seguro de cancelar?");
  };
- confirmGuardarcliente() {
+ confirmGuardar() {
      return confirm("¿Estás seguro de modificar los datos?");
  }
                  </script>
