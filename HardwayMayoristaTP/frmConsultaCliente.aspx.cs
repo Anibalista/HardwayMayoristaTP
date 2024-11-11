@@ -314,6 +314,59 @@ namespace HardwayMayoristaTP
         {
             Response.Redirect("frmAltaCliente.aspx");
         }
+
+        protected void GridViewClientes_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            string sortExpression = e.SortExpression;
+            string direction = GetSortDirection(sortExpression);
+
+            string query = "SELECT Personas.Dni, Personas.Nombre, Personas.Apellido, Personas.Email, Personas.Telefono, Clientes.Localidad " +
+                "FROM Clientes INNER JOIN Personas ON Clientes.IdPersona = Personas.Id " +
+                "INNER JOIN TipoDni ON Personas.IdTipoDni = TipoDni.Id " +
+                "WHERE (Personas.Dni LIKE '%' + @Consulta + '%' OR Personas.Nombre LIKE '%' + @Consulta + '%' " +
+                "OR Personas.Apellido LIKE '%' + @Consulta + '%' OR Personas.Email LIKE '%' + @Consulta + '%' " +
+                "OR Personas.Telefono LIKE '%' + @Consulta + '%' OR Clientes.Localidad LIKE '%' + @Consulta + '%') " +
+                "AND Clientes.Activo = 1 ORDER BY " + sortExpression + " " + direction;
+
+            string connectionString = ConfigurationManager.ConnectionStrings["HardwayMayoristaConnectionString"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Consulta", txtBuscar.Text.Trim());
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                GridViewClientes.DataSource = dt;
+                GridViewClientes.DataBind();
+            }
+        }
+
+        private string GetSortDirection(string column)
+        {
+            // By default, set the sort direction to ascending.
+            string sortDirection = "ASC";
+            string sortExpression = ViewState["SortExpression"] as string;
+
+            if (sortExpression != null)
+            {
+                // Check if the same column is being sorted.
+                if (sortExpression == column)
+                {
+                    string lastDirection = ViewState["SortDirection"] as string;
+                    if ((lastDirection != null) && (lastDirection == "ASC"))
+                    {
+                        sortDirection = "DESC";
+                    }
+                }
+            }
+
+            // Save the new sort expression and direction.
+            ViewState["SortDirection"] = sortDirection;
+            ViewState["SortExpression"] = column;
+
+            return sortDirection;
+        }
     }
+     
 }
 

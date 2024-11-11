@@ -27,7 +27,7 @@
 
         </div>
         <div class="table-responsive">
-            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand">
+            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand" OnSorting="GridViewClientes_Sorting">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" /> 
