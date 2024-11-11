@@ -51,7 +51,30 @@
         .list-group-item .nav-link i {
             margin-right: 8px;
         }
+        .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.card-body {
+    font-size: 1.2rem; /* Tamaño de letra */
+}
+
+.card-title {
+    font-size: 1.5rem; /* Tamaño de letra del título */
+}
+
+.card-footer {
+    font-size: 1rem; /* Tamaño de letra del pie */
+}
+
+@media (min-width: 768px) {
+    .card {
+        min-height: 400px; /* Doble altura para pantallas medianas y grandes */
+    }
+}
     </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
