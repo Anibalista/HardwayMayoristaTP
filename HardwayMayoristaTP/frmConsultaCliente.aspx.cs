@@ -366,7 +366,14 @@ namespace HardwayMayoristaTP
 
             return sortDirection;
         }
+
+        protected void GridViewClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewClientes.PageIndex = e.NewPageIndex;
+            GridViewClientes.DataBind();
+        }
+
     }
-     
+
 }
 

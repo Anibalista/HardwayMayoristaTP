@@ -4,10 +4,10 @@
     <div class="container">
         <h2 class="my-4">Lista de Clientes</h2>
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar cliente..." />
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" Width="62px" OnClick="btnBuscar_Click" />
                 
             </div>
@@ -27,7 +27,7 @@
 
         </div>
         <div class="table-responsive">
-            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand" OnSorting="GridViewClientes_Sorting">
+            <asp:GridView ID="GridViewClientes" runat="server" CssClass="col-12" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewClientes_RowCommand" OnSorting="GridViewClientes_Sorting" OnPageIndexChanging="GridViewClientes_PageIndexChanging">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" /> 
