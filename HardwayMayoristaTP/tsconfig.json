@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6", // o "es2015" o una versión más reciente
+    "lib": [ "es2015", "dom" ],
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [ "assets/**/*" ],
+  "exclude": [ "node_modules" ]
+}
+

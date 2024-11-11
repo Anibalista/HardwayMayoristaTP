@@ -15,6 +15,24 @@ namespace HardwayMayoristaTP
             {
                 Response.Redirect("frmLogout.aspx");
             }
+            cargarInfo();
+        }
+
+        protected void cargarInfo()
+        {
+            string nombre = Session["Nombre"].ToString() ?? "";
+            string apellido = Session["Apellido"].ToString() ?? "";
+            Label1.Text = nombre + " " + apellido;
+            string nivel = Session["Nivel"].ToString() ?? "";
+            if (nivel == "admin")
+            {
+                nivel = "administrador";
+            }
+            if (!String.IsNullOrWhiteSpace(nivel))
+            {
+                nivel = char.ToUpper(nivel[0]) + nivel.Substring(1).ToLower();
+            }
+            Label2.Text = nivel;
         }
     }
 }
